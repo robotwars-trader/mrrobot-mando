@@ -19,7 +19,7 @@ const cab = { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 
 function enviar(res, cod, cuerpo, tipo = 'application/json; charset=utf-8', extra = {}) { if (res.headersSent) return; res.writeHead(cod, { ...cab, 'Content-Type': tipo, ...extra }); res.end(cuerpo); }
 function leer(req, max = MAX_CUERPO) { return new Promise((ok, mal) => { const p = []; let n = 0; req.on('data', c => { n += c.length; if (n > max) { mal(Object.assign(new Error('demasiado grande'), { cod: 413 })); req.destroy(); } else p.push(c); }); req.on('end', () => ok(Buffer.concat(p))); req.on('error', mal); }); }
 function ipDe(req) { return String(req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim(); }
-function limite(req) { const ip = ipDe(req), m = Math.floor(Date.now() / 60000), k = ip + '|' + m, n = (porIP.get(k) || 0) + 1; porIP.set(k, n); if (porIP.size > 5000) porIP.clear(); return n <= 240; }
+function limite(req) { const ip = ipDe(req), m = Math.floor(Date.now() / 60000), k = ip + '|' + m, n = (porIP.get(k) || 0) + 1; porIP.set(k, n); if (porIP.size > 5000) porIP.clear(); return n <= 1200; } // 1.50.6 · 240/min se quedaba corto: la app completa pide muchos datos al abrirse (un solo usuario)
 
 // La app firma «t.ruta» con su llave privada; se acepta 2 minutos y una sola vez.
 function esElPC(req) {
