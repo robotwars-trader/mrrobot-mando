@@ -1,0 +1,10 @@
+{
+  "name": "mrrobot-relevo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Relevo sin datos para manejar Mis Carteras / Mr.RoBoT desde el navegador. Los datos viven en la app del PC.",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" },
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: mrrobot-mando
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: "true"
+    startCommand: node server.js
+    healthCheckPath: /salud
+    envVars:
+      - key: MR_LLAVE_PUBLICA
+        sync: false
